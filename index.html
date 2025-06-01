@@ -1,79 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portfolio">
-  <title>Portfolio</title>
+  <meta name="description" content="Yvonne - Portfolio">
+  <title>Yvonne — Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    :root {
+      --color-bg-light: #f9f4ef;
+      --color-text-light: #1c1c1c;
+      --color-bg-dark: #1c1c1c;
+      --color-text-dark: #f9f4ef;
+      --color-accent: #aa7e52;
+    }
+
+    [data-theme="light"] {
+      background-color: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+
+    [data-theme="dark"] {
+      background-color: var(--color-bg-dark);
+      color: var(--color-text-dark);
+    }
+
     *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #fff;
-      color: #111;
       line-height: 1.6;
       padding: 2rem;
+      transition: background-color 0.3s, color 0.3s;
     }
+
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 4rem;
     }
+
     nav a {
       margin-left: 2rem;
       text-decoration: none;
-      color: #111;
+      color: inherit;
       font-weight: 300;
       transition: opacity 0.3s;
     }
+
     nav a:hover {
       opacity: 0.5;
     }
+
+    .theme-toggle-icon {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      margin-left: 1rem;
+      transition: background 0.3s;
+    }
+
+    .theme-toggle-icon:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
     h1, h2 {
       font-family: 'DM Serif Display', serif;
       font-weight: 400;
     }
+
     h1 {
       font-size: clamp(2rem, 6vw, 5rem);
       margin-bottom: 2rem;
     }
+
     h2 {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
+
     section {
       margin-bottom: 6rem;
-      max-width: 800px;
+      max-width: 900px;
     }
+
     .fade-in {
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 1s ease, transform 1s ease;
     }
+
     .fade-in.visible {
       opacity: 1;
       transform: none;
     }
-    .project {
-      margin-bottom: 3rem;
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
     }
+
+    .project {
+      display: flex;
+      flex-direction: column;
+    }
+
     .project-title {
       font-size: 1.5rem;
       font-weight: 600;
     }
+
     .project-description {
       font-size: 1rem;
       margin-top: 0.5rem;
     }
+
     footer {
       font-size: 0.8rem;
       opacity: 0.6;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      margin-top: 1rem;
+    }
+
+    .webgl-toggle button {
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      background: none;
+      border: 1px solid currentColor;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -84,21 +159,55 @@
       <a href="#work">Work</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
+      <div class="theme-toggle-icon" onclick="toggleTheme()">
+        <i data-lucide="moon"></i>
+      </div>
     </nav>
   </header>
 
   <main>
     <section class="fade-in">
-      <h1>I make digital things.</h1>
+      <h1>Welcome, Welcome</h1>
     </section>
 
     <section id="work" class="fade-in">
       <h2>Selected Work</h2>
+      <div class="project-grid">
+        <div class="project">
+          <div class="project-title">Multilingual Learning App</div>
+          <div class="project-description">A Unity WebGL project deployed as an Android app to help users learn multiple languages.</div>
+          <div class="space-y-4">
+            <!-- Toggle Tabs -->
+            <div class="flex gap-2">
+              <button onclick="switchUnity('bblue')" class="lang-tab active-tab">Bushou</button>
+              <button onclick="switchUnity('hyellow')" class="lang-tab">Hangul</button>
+              <button onclick="switchUnity('kpurple')" class="lang-tab">Kanji</button>
+              <button onclick="switchUnity('hgpink')" class="lang-tab">Hangugeo</button>
+            </div>
+          
+            <!-- Unity Frame Wrapper -->
+            <div class="relative w-full pt-[56.25%] rounded-xl overflow-hidden border">
+              <iframe
+                id="unity-frame"
+                src="/unity/bblue/index.html"
+                class="absolute top-0 left-0 w-full h-full border-none"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+
+        <div class="project">
+          <div class="project-title">Garden Blog</div>
+          <div class="project-description">A Flask-based personal blog where I document my adventures in gardening. Features a minimalist CMS.</div>
+          <a href="https://your-garden-blog.com" target="_blank">Visit the Garden Blog</a>
+        </div>
+      </div>
     </section>
 
     <section id="about" class="fade-in">
       <h2>About</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+      <p>I make digital things.</p>
     </section>
 
     <section id="contact" class="fade-in">
@@ -112,12 +221,19 @@
   </footer>
 
   <script>
+    lucide.createIcons();
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+    }
   </script>
 </body>
 </html>

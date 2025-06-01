@@ -237,3 +237,15 @@
   </script>
 </body>
 </html>
+
+<script>
+  function switchUnity(lang) {
+    const iframe = document.getElementById('unity-frame');
+    iframe.src = `/unity/${lang}/index.html`;
+
+    document.querySelectorAll('.lang-tab').forEach(btn => {
+      btn.classList.remove('active-tab');
+    });
+    event.target.classList.add('active-tab');
+  }
+</script>
